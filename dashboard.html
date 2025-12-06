@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Seguro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Libre Franklin', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .dashboard-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            display: none; /* Escondido até carregar os dados */
+        }
+        h1 { color: #333; margin-bottom: 20px; }
+        .user-info { background: #f7f7f7; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .user-info p { margin: 10px 0; color: #666; font-size: 16px; }
+        .btn-logout {
+            background: linear-gradient(to right, #f85032, #e73827);
+            color: white; border: none; padding: 12px 40px; border-radius: 20px;
+            font-size: 16px; cursor: pointer; transition: transform 0.3s; margin-top: 20px;
+        }
+        .btn-logout:hover { transform: scale(1.05); }
+        .loading { color: white; font-size: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="loading" class="loading">🔒 Verificando segurança...</div>
+
+    <div class="dashboard-container" id="dashboardContent">
+        <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+            ✅ Acesso Autorizado via Token JWT
+        </div>
+        
+        <h1>Bem-vindo ao Dashboard!</h1>
+        
+        <div class="user-info">
+            <p><strong>Nome:</strong> <span id="userName">...</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+            <p><strong>ID:</strong> <span id="userId">...</span></p>
+        </div>
+
+        <button class="btn-logout" onclick="logout()">Sair</button>
+    </div>
+
+    <script>
+        async function verificarAutenticacao() {
+            // 1. Pega o token do armazenamento
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                window.location.href = 'index.html'; // Sem token = Tchau
+                return;
+            }
+
+            try {
+                // 2. Manda o token pro servidor conferir
+                const response = await fetch('http://localhost:3000/meus-dados', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}` // <--- Aqui vai o token
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.sucesso) {
+                    // 3. Sucesso! Mostra o painel e preenche os dados
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('dashboardContent').style.display = 'block';
+                    
+                    document.getElementById('userName').textContent = data.usuario.nome;
+                    document.getElementById('userEmail').textContent = data.usuario.email;
+                    document.getElementById('userId').textContent = data.usuario.id;
+                } else {
+                    throw new Error('Token inválido');
+                }
+            } catch (error) {
+                alert('Sessão expirada. Faça login novamente.');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'index.html';
+        }
+
+        // Roda a verificação ao iniciar
+        verificarAutenticacao();
+    </script>
+</body>
+</html>

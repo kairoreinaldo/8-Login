@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="body-container">
+        <div class="container" id="container">
+            <div>
+                <div class="form-container sign-up-container">
+                    <form action="#">
+                        <h1>Criar uma conta</h1>
+                        <input type="text" placeholder="Nome" />
+                        <input type="email" placeholder="Email" />
+                        <input type="password" placeholder="Senha" />
+                        <div class="btn-grad">Registrar</div>
+                    </form>
+                </div>
+                <div class="form-container sign-in-container">
+                    <form action="#">
+                        <h1>Login</h1>
+                        <input type="email" placeholder="Email" />
+                        <input type="password" placeholder="Senha" />
+                        <a href="#">Esqueceu sua senha??</a>
+                        <div class="btn-grad">Entrar</div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <div class="overlay-container">
+                    <div class="overlay">
+                        <div class="overlay-panel overlay-left">
+                            <div class="btn-grad" id="signIn">Login</div>
+                        </div>
+                        <div class="overlay-panel overlay-right">
+                            <div class="btn-grad" id="signUp">Registrar conta</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+
+</html>
+<!-- npm init -y PARA CRIAR UMA DAS NOSSAS PRIMEIRA DEPENDENCIA(json) executar no terminal pront de command -->
+ <!-- npm install express mysql2 bcrypt body-parser cors ESSE COMANDO É O pacote que lida com a segurança de senhas é o bcrypt.
+O mysql2 é utilizado para conectar sua aplicação a um banco de dados MySQL. -->
+  <!-- Da o Start no mysql/ net start mysql / -->
+<!-- CRIAR NOSSO BANCO DE DADOS mysql-u root -->
+<!-- node server.js //COMANDO PARA ABRIR O HTTP do site -->

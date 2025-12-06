@@ -1,0 +1,5 @@
+mysql -u root  >> para abrir o mysql
+SHOW DATABASES
+USE sistema_loguin;
+SHOW TABLES;
+SELECT *FROM usuarios;
